@@ -1,0 +1,6 @@
+- name: Restart SSH
+  systemd:
+    name: sshd
+    state: restarted
+  # Optional: Add a delay to avoid locking yourself out
+  # delay: 5

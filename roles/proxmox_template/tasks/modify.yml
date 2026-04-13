@@ -24,18 +24,11 @@
     timeout: 600
 
 - name: update sshd config
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/ssh/sshd_config
     regexp: '^#\?PasswordAuthentication.*no'
     line: 'PasswordAuthentication=yes'
-  notify: restart_sshd
-
-  handlers:
-  - name: restart_sshd
-    service:
-      name: sshd
-      state: restarted
-
+  notify: Restart SSH         # Run handler to restart SSH after modifying the config
 
 - name: Stop Template
   community.proxmox.proxmox_kvm:
