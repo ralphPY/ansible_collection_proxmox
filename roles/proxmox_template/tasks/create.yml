@@ -20,7 +20,8 @@
   changed_when: false
 
 - set_fact:
-    template_exists: "{{ template_status.rc == 0 }}"
+    #template_exists: "{{ template_status.rc == 0 }}"         # when using cli command
+    template_exists: "{{ template_status.failed == false }}"  # when using proxmox module
 
 - name: Destroy template if forced
   when: template_exists and force_recreate_template
