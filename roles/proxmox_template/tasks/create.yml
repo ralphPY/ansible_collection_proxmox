@@ -86,7 +86,6 @@
   become: true
   command: >
     qm set {{ template_vmid }}
-    --scsihw virtio-scsi-pci
     --scsi0 {{ storage }}:vm-{{ template_vmid }}-disk-0
 
 - name: Set boot order

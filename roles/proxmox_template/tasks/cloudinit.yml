@@ -1,7 +1,17 @@
-- name: Clone and Provision VM with integrated config
+- name: Configure cloud-init
+  when: item.cloudinit | default(false)
   community.proxmox.proxmox_kvm:
-    # ... your Proxmox credentials ...
+    api_host: "{{ proxmox_host }}"
+    api_user: "{{ proxmox_user }}"
+    api_token_id: "{{ proxmox_token_id }}"
+    api_token_secret: "{{ proxmox_token_secret }}"
+    validate_certs: false
     node: "{{ node }}"
+    vmid: "{{ template_vmid }}"
+    #ciuser: "{{ template_ciuser }}"
+    #sshkeys: "{{ ssh_public_key }}"
+    ipconfig:
+      ipconfig0: "{{ template_ipconfig }}"
     user_data: |
       #cloud-config
       # 1. User & SSH Setup (Since user_data overrides GUI fields)
@@ -22,22 +32,6 @@
         # Modify SSHD config directly
         - sed -i 's/^#\?PasswordAuthentication.*/PasswordAuthentication yes/' /etc/ssh/sshd_config
         - systemctl restart ssh
-    state: started
-
-- name: Configure cloud-init
-  when: item.cloudinit | default(false)
-  community.proxmox.proxmox_kvm:
-    api_host: "{{ proxmox_host }}"
-    api_user: "{{ proxmox_user }}"
-    api_token_id: "{{ proxmox_token_id }}"
-    api_token_secret: "{{ proxmox_token_secret }}"
-    validate_certs: false
-    node: "{{ node }}"
-    vmid: "{{ template_vmid }}"
-    #ciuser: "{{ template_ciuser }}"
-    #sshkeys: "{{ ssh_public_key }}"
-    ipconfig:
-      ipconfig0: "{{ template_ipconfig }}"
     update: true
 
 
