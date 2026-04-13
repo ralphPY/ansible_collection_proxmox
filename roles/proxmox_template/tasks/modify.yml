@@ -1,0 +1,49 @@
+## Start Template, modify it and stop it.
+
+- name: Start Template
+  community.proxmox.proxmox_kvm:
+    api_host: "{{ proxmox_host }}"
+    api_user: "{{ proxmox_user }}"
+    api_token_id: "{{ proxmox_token_id }}"
+    api_token_secret: "{{ proxmox_token_secret }}"
+    validate_certs: false
+    node: "{{ node }}"
+    vmid: "{{ template_vmid }}"
+    state: started
+  
+- name: Wait for cloud-init to complete
+  community.proxmox.proxmox_kvm:
+    api_host: "{{ proxmox_host }}"
+    api_user: "{{ proxmox_user }}"
+    api_token_id: "{{ proxmox_token_id }}"
+    api_token_secret: "{{ proxmox_token_secret }}"
+    validate_certs: false 
+    node: "{{ node }}"
+    vmid: "{{ template_vmid }}"
+    wait_for_cloudinit: true
+    timeout: 600
+
+- name: update sshd config
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#\?PasswordAuthentication.*no'
+    line: 'PasswordAuthentication=yes'
+  notify: restart_sshd
+
+  handlers:
+  - name: restart_sshd
+    service:
+      name: sshd
+      state: restarted
+
+
+- name: Stop Template
+  community.proxmox.proxmox_kvm:
+    api_host: "{{ proxmox_host }}"
+    api_user: "{{ proxmox_user }}"
+    api_token_id: "{{ proxmox_token_id }}"
+    api_token_secret: "{{ proxmox_token_secret }}"
+    validate_certs: false
+    node: "{{ node }}"
+    vmid: "{{ template_vmid }}"
+    state: stopped

@@ -7,7 +7,7 @@ template_cores: 2
 template_cpu: host
 template_bridge: vmbr0
 
-template_ciuser: debian
+template_ciuser: ansible
 template_ipconfig: "ip=dhcp"
 
 force_recreate_template: false
