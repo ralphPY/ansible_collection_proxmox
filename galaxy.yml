@@ -12,6 +12,6 @@ license:
   - "MIT"
 
 dependencies: 
-  "community.proxmox": ">=2.0.0"
+  "community.proxmox": ">=2.0.0-beta2"
 
 repository: https://github.com/ralphPY/ansible_collection_proxmox
