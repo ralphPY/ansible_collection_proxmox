@@ -1,8 +1,6 @@
 collections:
-  #- name: community.proxmox
-    #version: ">=2.7.0"
-    #version: "2.7.2"
-    #version: "2.5.0"
+  - name: community.general
+    version: ">=9.0.0" # This contains the modern Proxmox modules
   - name: community.proxmox
     source: https://github.com/ansible-collections/community.proxmox.git
     type: git
