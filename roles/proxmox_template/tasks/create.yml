@@ -73,6 +73,14 @@
     boot: "order=scsi0"
     update: true
 
+- name: Add cloud-init disk
+  when: not template_exists or force_recreate_template
+  delegate_to: "{{ proxmox_host }}"
+  become: true
+  command: >
+    qm set {{ template_vmid }}
+    --ide2 {{ storage }}:cloudinit
+
 - name: Convert to template
   when: not template_exists or force_recreate_template
   community.proxmox.proxmox_kvm:
