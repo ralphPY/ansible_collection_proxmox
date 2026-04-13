@@ -8,6 +8,7 @@ template_cpu: host
 template_bridge: vmbr0
 
 template_ciuser: ansible
-template_ipconfig: "{{ template_ip | default('ip=dhcp') }}"
+template_ipconfig: "ip={{ template_ip }}{{ template_cidr }},gw={{ template_gateway }}| default('ip=dhcp') }}"
+#template_ipconfig: "{{ template_ip | default('ip=dhcp') }}"
 
 force_recreate_template: false

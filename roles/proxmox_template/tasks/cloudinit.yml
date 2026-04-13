@@ -12,6 +12,7 @@
     sshkeys: "{{ ssh_public_key }}"
     ipconfig:
       ipconfig0: "{{ template_ipconfig }}"
+
     # user_data: |
     #   #cloud-config
     #   # 1. User & SSH Setup (Since user_data overrides GUI fields)
