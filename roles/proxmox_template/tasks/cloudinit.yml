@@ -1,5 +1,5 @@
 - name: Configure cloud-init
-  when: item.cloudinit | default(false)
+  #when: item.cloudinit | default(false)
   community.proxmox.proxmox_kvm:
     api_host: "{{ proxmox_host }}"
     api_user: "{{ proxmox_user }}"
