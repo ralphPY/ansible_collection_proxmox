@@ -1,6 +1,20 @@
-- name: Check if template exists
-  delegate_to: "{{ proxmox_host }}"
-  command: qm status {{ template_vmid }}
+# - name: Check if template exists
+#   delegate_to: "{{ proxmox_host }}"
+#   command: qm status {{ template_vmid }}
+#   register: template_status
+#   failed_when: false
+#   changed_when: false
+
+- name: Check if template exists via proxmox module
+  community.proxmox.proxmox_kvm:
+    api_host: "{{ proxmox_host }}"
+    api_user: "{{ proxmox_user }}"
+    api_token_id: "{{ proxmox_token_id }}"
+    api_token_secret: "{{ proxmox_token_secret }}"
+    validate_certs: false
+    vmid: "{{ template_vmid }}"
+    node: "{{ node }}"
+    state: info
   register: template_status
   failed_when: false
   changed_when: false
