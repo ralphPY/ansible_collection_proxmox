@@ -1,5 +1,5 @@
 - import_tasks: validate.yml
 - import_tasks: create.yml
 - import_tasks: cloudinit.yml
-- import_tasks: modify.yml
+#- import_tasks: modify.yml
 - import_tasks: convert_to_template.yml
