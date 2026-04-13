@@ -2,4 +2,4 @@ collections:
   - name: community.general
     version: ">=9.0.0" # This contains the modern Proxmox modules
   - name: community.proxmox
-    version: ">=2.0.0-beta2"
+    version: ">=1.6.0"
