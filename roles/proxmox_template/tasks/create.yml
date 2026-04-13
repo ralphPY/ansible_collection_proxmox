@@ -24,6 +24,7 @@
     template_exists: "{{ template_status.failed == false }}"  # when using proxmox module
 
 - name: Make sure Templated is not running
+  when: template_exists and force_recreate_template
   community.proxmox.proxmox_kvm:
     api_host: "{{ proxmox_host }}"
     api_user: "{{ proxmox_user }}"
