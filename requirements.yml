@@ -1,5 +1,9 @@
 collections:
-  - name: community.proxmox
+  #- name: community.proxmox
     #version: ">=2.7.0"
     #version: "2.7.2"
-    version: "2.5.0"
+    #version: "2.5.0"
+  - name: community.proxmox
+    source: https://github.com/ansible-collections/community.proxmox.git
+    type: git
+    version: main
