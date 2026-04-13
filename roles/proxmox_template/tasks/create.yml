@@ -73,7 +73,7 @@
     boot: "order=scsi0"
     update: true
 
-- name: Add cloud-init disk
+- name: Add cloud-init disk (small virtual CD_ROM)
   when: not template_exists or force_recreate_template
   delegate_to: "{{ proxmox_host }}"
   become: true
