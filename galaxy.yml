@@ -1,4 +1,4 @@
-namespace: your_namespace
+namespace: ralphpy
 name: proxmox
 version: 1.0.0
 readme: README.md
@@ -13,4 +13,4 @@ license:
 
 dependencies: {}
 
-repository: https://example.com/your-repo
+repository: https://github.com/ralphPY/ansible_collection_proxmox
