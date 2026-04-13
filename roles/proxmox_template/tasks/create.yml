@@ -13,6 +13,8 @@
   delegate_to: "{{ proxmox_host }}"
   become: true
   command: qm destroy {{ template_vmid }}
+  # Optional: Add a delay to ensure Proxmox has fully processed the destroy action before proceeding
+  delay: 3
 
 - name: Download image
   when: not template_exists or force_recreate_template
