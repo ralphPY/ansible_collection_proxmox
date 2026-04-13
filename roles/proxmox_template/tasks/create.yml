@@ -19,9 +19,21 @@
   failed_when: false
   changed_when: false
 
+- name: Check if template exists via Proxmox API
+  uri:
+    url: "https://{{ proxmox_host }}:8006/api2/json/nodes/{{ node }}/qemu/{{ template_vmid }}/status/current"
+    method: GET
+    headers:
+      Authorization: "PVEAPIToken={{ proxmox_user }}!{{ proxmox_token_id }}={{ proxmox_token_secret }}"
+    validate_certs: false
+    status_code: [200, 404]
+  register: template_status
+  changed_when: false
+
 - set_fact:
     #template_exists: "{{ template_status.rc == 0 }}"         # when using cli command
-    template_exists: "{{ template_status.failed == false }}"  # when using proxmox module
+    #template_exists: "{{ template_status.failed == true }}"  # when using proxmox module
+    template_exists: "{{ template_status.status == 200 }}"   # when using API call
 
 - name: Make sure Templated is not running
   when: template_exists and force_recreate_template
