@@ -11,28 +11,28 @@
     vmid: "{{ template_vmid }}"
     state: started
 
-- name: Wait for SSH to become available
-  ansible.builtin.wait_for_connection:
-    connect_timeout: 10
-    #delay: 10
-    sleep: 5
-    timeout: 300
+# - name: Wait for SSH to become available
+#   ansible.builtin.wait_for_connection:
+#     connect_timeout: 10
+#     #delay: 10
+#     sleep: 5
+#     timeout: 300
 
-- name: Wait for internal Cloud-init to finish 
-  ansible.builtin.command: cloud-init status --wait
-  changed_when: false
+# - name: Wait for internal Cloud-init to finish 
+#   ansible.builtin.command: cloud-init status --wait
+#   changed_when: false
 
-- name: update sshd config
-  ansible.builtin.lineinfile:
-    path: /etc/ssh/sshd_config
-    regexp: '^#\?PasswordAuthentication.*no'
-    line: 'PasswordAuthentication=yes'
-  notify: Restart SSH         # Run handler to restart SSH after modifying the config
+# - name: update sshd config
+#   ansible.builtin.lineinfile:
+#     path: /etc/ssh/sshd_config
+#     regexp: '^#\?PasswordAuthentication.*no'
+#     line: 'PasswordAuthentication=yes'
+#   notify: Restart SSH         # Run handler to restart SSH after modifying the config
 
-- name: Wait for SSH to become available
-  ansible.builtin.wait_for_connection:
-    delay: 10
-    timeout: 300
+# - name: Wait for SSH to become available
+#   ansible.builtin.wait_for_connection:
+#     delay: 10
+#     timeout: 300
 
 - name: Stop Template
   community.proxmox.proxmox_kvm:

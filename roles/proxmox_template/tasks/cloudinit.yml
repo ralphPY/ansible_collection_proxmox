@@ -1,3 +1,29 @@
+- name: Clone and Provision VM with integrated config
+  community.proxmox.proxmox_kvm:
+    # ... your Proxmox credentials ...
+    node: "{{ node }}"
+    user_data: |
+      #cloud-config
+      # 1. User & SSH Setup (Since user_data overrides GUI fields)
+      user: {{ cloud_init_user }}
+      ssh_authorized_keys:
+        - {{ ssh_public_key }}
+      sudo: ALL=(ALL) NOPASSWD:ALL
+
+      # 2. Package Installation
+      packages:
+        - qemu-guest-agent
+
+      # 3. Final Tweaks
+      runcmd:
+        # Enable and start the agent
+        - systemctl enable qemu-guest-agent
+        - systemctl start qemu-guest-agent
+        # Modify SSHD config directly
+        - sed -i 's/^#\?PasswordAuthentication.*/PasswordAuthentication yes/' /etc/ssh/sshd_config
+        - systemctl restart ssh
+    state: started
+
 - name: Configure cloud-init
   when: item.cloudinit | default(false)
   community.proxmox.proxmox_kvm:
@@ -8,8 +34,8 @@
     validate_certs: false
     node: "{{ node }}"
     vmid: "{{ template_vmid }}"
-    ciuser: "{{ template_ciuser }}"
-    sshkeys: "{{ ssh_public_key }}"
+    #ciuser: "{{ template_ciuser }}"
+    #sshkeys: "{{ ssh_public_key }}"
     ipconfig:
       ipconfig0: "{{ template_ipconfig }}"
     update: true
