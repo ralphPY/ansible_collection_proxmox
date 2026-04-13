@@ -23,6 +23,17 @@
     #template_exists: "{{ template_status.rc == 0 }}"         # when using cli command
     template_exists: "{{ template_status.failed == false }}"  # when using proxmox module
 
+- name: Make sure Templated is not running
+  community.proxmox.proxmox_kvm:
+    api_host: "{{ proxmox_host }}"
+    api_user: "{{ proxmox_user }}"
+    api_token_id: "{{ proxmox_token_id }}"
+    api_token_secret: "{{ proxmox_token_secret }}"
+    validate_certs: false
+    node: "{{ node }}"
+    vmid: "{{ template_vmid }}"
+    state: stopped
+
 - name: Destroy template if forced
   when: template_exists and force_recreate_template
   delegate_to: "{{ proxmox_host }}"
