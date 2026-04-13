@@ -11,7 +11,7 @@
     ciuser: "{{ template_ciuser }}"
     sshkeys: "{{ ssh_public_key }}"
     ipconfig:
-      ipconfig0: "{{ template_ipconfig }}"
+      ipconfig0: "{{ template_ipconfig | default('ip=dhcp') }}"
 
     # user_data: |
     #   #cloud-config

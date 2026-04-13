@@ -11,5 +11,4 @@
       - template_name is defined
       - template_ciuser is defined
       - ssh_public_key is defined
-      - template_ipconfig is defined
     fail_msg: "Missing required Proxmox variables"
