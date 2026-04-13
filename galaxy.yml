@@ -1,16 +1,17 @@
-namespace: ralphpy
-name: proxmox
-version: 1.0.0
-readme: README.md
+namespace: "ralphpy"
+name: "proxmox"
+version: "1.0.0"
+readme: "README.md"
 
 authors:
-  - Your Name
+  - "RalphPY"
 
-description: Proxmox VM and template automation
+description: "Proxmox VM and template automation"
 
 license: 
-  - MIT
+  - "MIT"
 
-dependencies: {}
+dependencies: 
+  "community.proxmox": ">=1.0.0"
 
 repository: https://github.com/ralphPY/ansible_collection_proxmox
