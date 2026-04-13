@@ -10,18 +10,16 @@
     node: "{{ node }}"
     vmid: "{{ template_vmid }}"
     state: started
-  
-- name: Wait for cloud-init to complete
-  community.proxmox.proxmox_kvm:
-    api_host: "{{ proxmox_host }}"
-    api_user: "{{ proxmox_user }}"
-    api_token_id: "{{ proxmox_token_id }}"
-    api_token_secret: "{{ proxmox_token_secret }}"
-    validate_certs: false 
-    node: "{{ node }}"
-    vmid: "{{ template_vmid }}"
-    wait_for_cloudinit: true
-    timeout: 600
+    wait_for_cloudinit: true  # This ensures Proxmox finishes its job
+
+- name: Wait for SSH to become available
+  ansible.builtin.wait_for_connection:
+    delay: 10
+    timeout: 300
+
+- name: Wait for internal Cloud-init to finish 
+  ansible.builtin.command: cloud-init status --wait
+  changed_when: false
 
 - name: update sshd config
   ansible.builtin.lineinfile:
@@ -30,6 +28,11 @@
     line: 'PasswordAuthentication=yes'
   notify: Restart SSH         # Run handler to restart SSH after modifying the config
 
+- name: Wait for SSH to become available
+  ansible.builtin.wait_for_connection:
+    delay: 10
+    timeout: 300
+    
 - name: Stop Template
   community.proxmox.proxmox_kvm:
     api_host: "{{ proxmox_host }}"
