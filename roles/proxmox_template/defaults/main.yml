@@ -1,0 +1,13 @@
+# Can be overridden in playbook
+image_url: "{{ proxmox_template_image_url | default('https://cloud.debian.org/images/cloud/trixie/latest/debian-13-genericcloud-amd64.qcow2') }}"
+image_file: "{{ proxmox_template_image_file | default('/var/lib/vz/images/debian.qcow2') }}"
+
+template_memory: 2048
+template_cores: 2
+template_cpu: host
+template_bridge: vmbr0
+
+template_ciuser: debian
+template_ipconfig: "ip=dhcp"
+
+force_recreate_template: false

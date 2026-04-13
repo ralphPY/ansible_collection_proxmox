@@ -1,0 +1,23 @@
+#cloud-config
+hostname: {{ item.name }}
+
+users:
+    - name: {{ item.ciuser | default('debian') }}
+        sudo: ALL=(ALL) NOPASSWD:ALL
+        shell: /bin/bash
+        ssh_authorized_keys:
+    - {{ ssh_public_key }}
+
+{% if item.packages is defined %}
+packages:
+{% for pkg in item.packages %}
+    - {{ pkg }}
+{% endfor %}
+{% endif %}
+
+{% if item.runcmd is defined %}
+runcmd:
+{% for cmd in item.runcmd %}
+    - {{ cmd }}
+{% endfor %}
+{% endif %}

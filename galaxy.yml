@@ -1,0 +1,16 @@
+namespace: your_namespace
+name: proxmox
+version: 1.0.0
+readme: README.md
+
+authors:
+  - Your Name
+
+description: Proxmox VM and template automation
+
+license: 
+  - MIT
+
+dependencies: {}
+
+repository: https://example.com/your-repo

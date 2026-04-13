@@ -1,0 +1,5 @@
+- name: Validate VM list
+  assert:
+    that:
+      - vm_list | length > 0
+    fail_msg: "vm_list must not be empty"

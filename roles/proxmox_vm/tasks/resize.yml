@@ -1,0 +1,7 @@
+- name: Resize disk if requested
+  when: vm_disk_resize
+  delegate_to: "{{ proxmox_host }}"
+  become: true
+  command: >
+    qm resize {{ item.vmid }} scsi0 {{ item.disk | default('10G') }}
+  loop: "{{ vm_list }}"

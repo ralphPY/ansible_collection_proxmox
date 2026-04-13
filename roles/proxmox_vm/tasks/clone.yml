@@ -1,0 +1,30 @@
+- name: Clone VMs
+  community.proxmox.proxmox_kvm:
+    api_host: "{{ proxmox_host }}"
+    api_user: "{{ proxmox_user }}"
+    api_token_id: "{{ proxmox_token_id }}"
+    api_token_secret: "{{ proxmox_token_secret }}"
+    validate_certs: false
+    node: "{{ node }}"
+    clone: "{{ template_name }}"
+    vmid: "{{ template_vmid }}"
+    newid: "{{ item.vmid }}"
+    name: "{{ item.name }}"
+    full: "{{ vm_full_clone }}"
+    memory: "{{ item.memory | default(omit) }}"
+    cores: "{{ item.cores | default(omit) }}"
+    state: present
+  loop: "{{ vm_list }}"
+
+- name: Start VMs
+  when: vm_start
+  community.proxmox.proxmox_kvm:
+    api_host: "{{ proxmox_host }}"
+    api_user: "{{ proxmox_user }}"
+    api_token_id: "{{ proxmox_token_id }}"
+    api_token_secret: "{{ proxmox_token_secret }}"
+    validate_certs: false
+    node: "{{ node }}"
+    vmid: "{{ item.vmid }}"
+    state: started
+  loop: "{{ vm_list }}"

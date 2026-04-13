@@ -1,0 +1,12 @@
+- name: Validate required variables
+  assert:
+    that:
+      - proxmox_host is defined
+      - proxmox_user is defined
+      - proxmox_token_id is defined
+      - proxmox_token_secret is defined
+      - node is defined
+      - storage is defined
+      - template_vmid is defined
+      - template_name is defined
+    fail_msg: "Missing required Proxmox variables"

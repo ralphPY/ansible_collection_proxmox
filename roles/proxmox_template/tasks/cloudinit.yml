@@ -1,0 +1,37 @@
+- name: Configure cloud-init
+  community.proxmox.proxmox_kvm:
+    api_host: "{{ proxmox_host }}"
+    api_user: "{{ proxmox_user }}"
+    api_token_id: "{{ proxmox_token_id }}"
+    api_token_secret: "{{ proxmox_token_secret }}"
+    validate_certs: false
+    node: "{{ node }}"
+    vmid: "{{ template_vmid }}"
+    ciuser: "{{ template_ciuser }}"
+    sshkeys: "{{ ssh_public_key }}"
+    ipconfig:
+      ipconfig0: "{{ template_ipconfig }}"
+    update: true
+
+- name: Generate cloud-init user-data
+  delegate_to: "{{ proxmox_host }}"
+  become: true
+  template:
+    src: cloudinit-userdata.j2
+    dest: "/var/lib/vz/snippets/{{ item.name }}.yaml"
+  loop: "{{ vm_list }}"
+  when: item.cloudinit | default(false)
+
+- name: Apply cloud-init custom config
+  community.proxmox.proxmox_kvm:
+    api_host: "{{ proxmox_host }}"
+    api_user: "{{ proxmox_user }}"
+    api_token_id: "{{ proxmox_token_id }}"
+    api_token_secret: "{{ proxmox_token_secret }}"
+    validate_certs: false
+    node: "{{ node }}"
+    vmid: "{{ item.vmid }}"
+    cicustom: "user=local:snippets/{{ item.name }}.yaml"
+    update: true
+  loop: "{{ vm_list }}"
+  when: item.cloudinit | default(false)

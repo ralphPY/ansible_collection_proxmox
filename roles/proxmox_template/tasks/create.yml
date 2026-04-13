@@ -1,0 +1,86 @@
+- name: Check if template exists
+  delegate_to: "{{ proxmox_host }}"
+  command: qm status {{ template_vmid }}
+  register: template_status
+  failed_when: false
+  changed_when: false
+
+- set_fact:
+    template_exists: "{{ template_status.rc == 0 }}"
+
+- name: Destroy template if forced
+  when: template_exists and force_recreate_template
+  delegate_to: "{{ proxmox_host }}"
+  become: true
+  command: qm destroy {{ template_vmid }}
+
+- name: Download image
+  when: not template_exists or force_recreate_template
+  delegate_to: "{{ proxmox_host }}"
+  become: true
+  get_url:
+    url: "{{ image_url }}"
+    dest: "{{ image_file }}"
+
+- name: Create VM
+  when: not template_exists or force_recreate_template
+  community.proxmox.proxmox_kvm:
+    api_host: "{{ proxmox_host }}"
+    api_user: "{{ proxmox_user }}"
+    api_token_id: "{{ proxmox_token_id }}"
+    api_token_secret: "{{ proxmox_token_secret }}"
+    validate_certs: false
+    node: "{{ node }}"
+    vmid: "{{ template_vmid }}"
+    name: "{{ template_name }}"
+    memory: "{{ template_memory }}"
+    cores: "{{ template_cores }}"
+    cpu: "{{ template_cpu }}"
+    scsihw: virtio-scsi-pci
+    net:
+      net0: "virtio,bridge={{ template_bridge }}"
+    serial:
+      serial0: socket
+    vga: serial0
+    agent: 1
+    state: present
+
+- name: Import disk
+  when: not template_exists or force_recreate_template
+  delegate_to: "{{ proxmox_host }}"
+  become: true
+  command: qm importdisk {{ template_vmid }} {{ image_file }} {{ storage }}
+
+- name: Attach disk
+  when: not template_exists or force_recreate_template
+  delegate_to: "{{ proxmox_host }}"
+  become: true
+  command: >
+    qm set {{ template_vmid }}
+    --scsihw virtio-scsi-pci
+    --scsi0 {{ storage }}:vm-{{ template_vmid }}-disk-0
+
+- name: Set boot order
+  when: not template_exists or force_recreate_template
+  community.proxmox.proxmox_kvm:
+    api_host: "{{ proxmox_host }}"
+    api_user: "{{ proxmox_user }}"
+    api_token_id: "{{ proxmox_token_id }}"
+    api_token_secret: "{{ proxmox_token_secret }}"
+    validate_certs: false
+    node: "{{ node }}"
+    vmid: "{{ template_vmid }}"
+    boot: "order=scsi0"
+    update: true
+
+- name: Convert to template
+  when: not template_exists or force_recreate_template
+  community.proxmox.proxmox_kvm:
+    api_host: "{{ proxmox_host }}"
+    api_user: "{{ proxmox_user }}"
+    api_token_id: "{{ proxmox_token_id }}"
+    api_token_secret: "{{ proxmox_token_secret }}"
+    validate_certs: false
+    node: "{{ node }}"
+    vmid: "{{ template_vmid }}"
+    template: true

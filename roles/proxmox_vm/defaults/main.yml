@@ -1,0 +1,4 @@
+vm_list: []
+vm_start: true
+vm_full_clone: true
+vm_disk_resize: false
