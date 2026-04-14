@@ -23,7 +23,7 @@
   ansible.builtin.shell: cloud-init status --wait
   args:
     executable: /bin/bash
-  delegate_to: "{{ template_host }}"
+  delegate_to: "{{ template_ip }}"
   retries: 3
   delay: 10
   until: cloud_init_status is succeeded
