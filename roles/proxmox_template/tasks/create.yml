@@ -5,7 +5,7 @@
 #   failed_when: false
 #   changed_when: false
 
-# - set_fact:
+#   set_fact:
 #     template_exists: "{{ template_status.rc == 0 }}"         # when using cli command
 
 
@@ -23,9 +23,11 @@
   failed_when: false
   changed_when: false
 
-- set_fact:
+- name: Set template exists fact
+  set_fact:
     template_exists: "{{ template_status.failed == false }}"  # when using proxmox module
 
+- name: Debug template status
   debug:
     msg: |-
       "Template status: {{ template_status }}"
@@ -42,7 +44,7 @@
 #   register: template_status
 #   changed_when: false
 
-# - set_fact:
+#   set_fact:
 #     template_exists: "{{ template_status.status == 200 }}"   # when using API call
 
 - name: Make sure Templated is not running
