@@ -47,11 +47,6 @@
       "Template cloud-init rc: {{ cloud_init_status.rc }}"
       "Template cloud-init failed: {{ cloud_init_status.failed }}"
 
-- name: Wait for internal Cloud-init to finish
-  delegate_to: "{{ template_ip }}"
-  ansible.builtin.command: cloud-init status --wait
-  changed_when: false
-
 - name: update sshd config
   delegate_to: "{{ template_ip }}"
   become: true
