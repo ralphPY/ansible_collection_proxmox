@@ -36,6 +36,10 @@
   debug:
     msg: |-
       "Template cloud-init status: {{ cloud_init_status.msg }}"
+      "Template cloud-init stdout: {{ cloud_init_status.stdout }}"
+      "Template cloud-init stderr: {{ cloud_init_status.stderr }}"
+      "Template cloud-init rc: {{ cloud_init_status.rc }}"
+      "Template cloud-init failed: {{ cloud_init_status.failed }}"
 
 # - name: Wait for internal Cloud-init to finish
 #   delegate_to: "{{ template_ip }}"
@@ -44,6 +48,7 @@
 
 - name: update sshd config
   delegate_to: "{{ template_ip }}"
+  become: true
   ansible.builtin.lineinfile:
     path: /etc/ssh/sshd_config
     regexp: '^#\?PasswordAuthentication.*no'
