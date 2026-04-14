@@ -64,7 +64,8 @@
     timeout: 600
 
 - name: Ensure qemu-guest-agent is installed
-  host: "{{ template_ip }}"
+  delegate_to: "{{ template_ip }}"
+  become: true
   ansible.builtin.package:
     name:  qemu-guest-agent
     state: present
