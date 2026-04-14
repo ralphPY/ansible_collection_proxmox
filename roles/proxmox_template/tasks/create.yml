@@ -26,7 +26,7 @@
 - set_fact:
     template_exists: "{{ template_status.failed == false }}"  # when using proxmox module
 
-- debug:
+  debug:
   #msg: "Template IP Config: {{ template_ipconfig }}"
   msg: |-
     "Template status: {{ template__status }}"
