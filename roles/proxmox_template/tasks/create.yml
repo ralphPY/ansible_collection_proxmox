@@ -5,6 +5,10 @@
 #   failed_when: false
 #   changed_when: false
 
+# - set_fact:
+#     template_exists: "{{ template_status.rc == 0 }}"         # when using cli command
+
+
 - name: Check if template exists via proxmox module
   community.proxmox.proxmox_kvm:
     api_host: "{{ proxmox_host }}"
@@ -19,6 +23,9 @@
   failed_when: false
   changed_when: false
 
+- set_fact:
+    template_exists: "{{ template_status.failed == true }}"  # when using proxmox module
+
 # - name: Check if template exists via Proxmox API
 #   uri:
 #     url: "https://{{ proxmox_host }}:8006/api2/json/nodes/{{ node }}/qemu/{{ template_vmid }}/status/current"
@@ -30,10 +37,8 @@
 #   register: template_status
 #   changed_when: false
 
-- set_fact:
-    #template_exists: "{{ template_status.rc == 0 }}"         # when using cli command
-    template_exists: "{{ template_status.failed == true }}"  # when using proxmox module
-    #template_exists: "{{ template_status.status == 200 }}"   # when using API call
+# - set_fact:
+#     template_exists: "{{ template_status.status == 200 }}"   # when using API call
 
 - name: Make sure Templated is not running
   when: template_exists and force_recreate_template
@@ -52,8 +57,8 @@
   delegate_to: "{{ proxmox_host }}"
   become: true
   command: qm destroy {{ template_vmid }}
-  # Optional: Add a delay to ensure Proxmox has fully processed the destroy action before proceeding
-  delay: 3
+  # Optional: Give PVE some time to fully processed the destroy action before proceeding
+  delay: 5
 
 - name: Download image
   when: not template_exists or force_recreate_template
