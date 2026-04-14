@@ -30,6 +30,10 @@
 - name: Debug template status
   debug:
     msg: |-
+      "Template API call failed: {{ template_status.failed }}"
+      "Template API call stderr: {{ template_status.stderr }}"
+      "Template API call stdout: {{ template_status.stdout }}"
+      "Template API call rc: {{ template_status.rc }}"
       "Template status: {{ template_status }}"
       "Template exists: {{ template_exists }}"
 
