@@ -24,7 +24,12 @@
   changed_when: false
 
 - set_fact:
-    template_exists: "{{ template_status.failed == true }}"  # when using proxmox module
+    template_exists: "{{ template_status.failed == false }}"  # when using proxmox module
+
+- debug:
+  #msg: "Template IP Config: {{ template_ipconfig }}"
+  msg: |-
+    "Template status: {{ template__status }}"
 
 # - name: Check if template exists via Proxmox API
 #   uri:
