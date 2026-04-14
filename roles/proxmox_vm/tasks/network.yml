@@ -4,7 +4,7 @@
     api_user: "{{ proxmox_user }}"
     api_token_id: "{{ proxmox_token_id }}"
     api_token_secret: "{{ proxmox_token_secret }}"
-    validate_certs: false
+    validate_certs: {{ validate_certs }}
     node: "{{ node }}"
     vmid: "{{ item.vmid }}"
     ipconfig:

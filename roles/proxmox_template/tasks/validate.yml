@@ -6,6 +6,7 @@
       - proxmox_token_id is defined
       - proxmox_token_secret is defined
       - proxmox_node is defined
+      - vallidate_certs is defined
       - storage is defined
       - template_vmid is defined
       - template_name is defined

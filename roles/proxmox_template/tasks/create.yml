@@ -15,7 +15,7 @@
     api_user: "{{ proxmox_user }}"
     api_token_id: "{{ proxmox_token_id }}"
     api_token_secret: "{{ proxmox_token_secret }}"
-    validate_certs: "{{ proxmox_validate_certs | default(false) }}"
+    validate_certs: "{{ validate_certs }}"
     vmid: "{{ template_vmid }}"
     node: "{{ proxmox_node }}"
     state: current
@@ -36,7 +36,7 @@
       "Template API call msg: {{ template_status.msg }}"
       "Template status: {{ template_status }}"
       "Template exists: {{ template_exists }}"
-      "Template running: {{ template_exists }}"
+      "Template running: {{ template_running }}"
 
 # - name: Check if template exists via Proxmox API
 #   uri:
@@ -59,7 +59,7 @@
     api_user: "{{ proxmox_user }}"
     api_token_id: "{{ proxmox_token_id }}"
     api_token_secret: "{{ proxmox_token_secret }}"
-    validate_certs: "{{ proxmox_validate_certs | default(false) }}"
+    validate_certs: "{{ validate_certs }}"
     node: "{{ proxmox_node }}"
     vmid: "{{ template_vmid }}"
     state: stopped
@@ -79,14 +79,14 @@
     url: "{{ image_url }}"
     dest: "{{ image_file }}"
 
-- name: Create VM
+- name: Create template VM
   when: not template_exists or force_recreate_template
   community.proxmox.proxmox_kvm:
     api_host: "{{ proxmox_host }}"
     api_user: "{{ proxmox_user }}"
     api_token_id: "{{ proxmox_token_id }}"
     api_token_secret: "{{ proxmox_token_secret }}"
-    validate_certs: "{{ proxmox_validate_certs | default(false) }}"
+    validate_certs: "{{ validate_certs }}"
     node: "{{ proxmox_node }}"
     vmid: "{{ template_vmid }}"
     name: "{{ template_name }}"
@@ -123,7 +123,7 @@
     api_user: "{{ proxmox_user }}"
     api_token_id: "{{ proxmox_token_id }}"
     api_token_secret: "{{ proxmox_token_secret }}"
-    validate_certs: "{{ proxmox_validate_certs | default(false) }}"
+    validate_certs: "{{ validate_certs }}"
     node: "{{ proxmox_node }}"
     vmid: "{{ template_vmid }}"
     boot: "order=scsi0"
