@@ -54,15 +54,15 @@
     path: /etc/ssh/sshd_config
     regexp: '^#?PasswordAuthentication no'
     line: 'PasswordAuthentication yes'
-  notify: Restart SSH           ## Run handler to restart SSH after modifying the config
+  #notify: Restart SSH           ## Run handler to restart SSH after modifying the config
 
-- name: Wait for SSH to become reachable
-  ansible.builtin.wait_for:
-    host: "{{ template_ip }}"   ## Needs to be IP address, not hostname.
-    port: 22
-    connect_timeout: 10
-    delay: 10
-    timeout: 600
+# - name: Wait for SSH to become reachable
+#   ansible.builtin.wait_for:
+#     host: "{{ template_ip }}"   ## Needs to be IP address, not hostname.
+#     port: 22
+#     connect_timeout: 10
+#     delay: 10
+#     timeout: 600
 
 # - name: Debug template_ip
 #   ansible.builtin.debug:
@@ -79,7 +79,7 @@
     name:  qemu-guest-agent
     state: present
 
-- name: Add extra user
+- name: Add optional extra user
   delegate_to: template_vm
   become: true
   when: extra_user is defined and extra_user | length > 0

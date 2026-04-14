@@ -2,4 +2,4 @@
 - import_tasks: create.yml               ## Create the VM   
 - import_tasks: cloudinit.yml            ## Configure cloud-init 
 - import_tasks: modify.yml               ## Customize VM before converting to template (e.g. apt install etc)  
-#- import_tasks: convert_to_template.yml  ## Stop template vm and convert to template
+- import_tasks: convert_to_template.yml  ## Stop template vm and convert to template
