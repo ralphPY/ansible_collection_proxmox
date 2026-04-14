@@ -19,14 +19,15 @@
     delay: 10
     timeout: 600
 
-- name: Wait for cloud-init to finish on remote host
+- name: Wait for cloud-init to finish on remote host (rc2 is OK, as it only indicates deprication warnings)
   ansible.builtin.shell: cloud-init status --wait
   args:
     executable: /bin/bash
   delegate_to: "{{ template_ip }}"
   retries: 3
   delay: 10
-  until: cloud_init_status is succeeded
+  until: "'status: done' in cloud_init_status.stdout"
+  #until: cloud_init_status is succeeded
   register: cloud_init_status
 
 - name: Debug cloud-init status
