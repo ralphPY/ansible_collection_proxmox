@@ -46,26 +46,26 @@
 #   ansible.builtin.command: cloud-init status --wait
 #   changed_when: false
 
-- name: update sshd config
-  delegate_to: "{{ template_ip }}"
-  become: true
-  ansible.builtin.lineinfile:
-    path: /etc/ssh/sshd_config
-    regexp: '^#\?PasswordAuthentication.*no'
-    line: 'PasswordAuthentication=yes'
-  notify: Restart SSH         # Run handler to restart SSH after modifying the config
+# - name: update sshd config
+#   delegate_to: "{{ template_ip }}"
+#   become: true
+#   ansible.builtin.lineinfile:
+#     path: /etc/ssh/sshd_config
+#     regexp: '^#\?PasswordAuthentication.*no'
+#     line: 'PasswordAuthentication=yes'
+#   notify: Restart SSH         # Run handler to restart SSH after modifying the config
 
-- name: Wait for SSH to become reachable
-  ansible.builtin.wait_for:
-    host: "{{ template_ip }}"
-    port: 22
-    connect_timeout: 10
-    delay: 10
-    timeout: 600
+# - name: Wait for SSH to become reachable
+#   ansible.builtin.wait_for:
+#     host: "{{ template_ip }}"
+#     port: 22
+#     connect_timeout: 10
+#     delay: 10
+#     timeout: 600
 
-- name: Debug template_ip
-  ansible.builtin.debug:
-    var: template_ip
+# - name: Debug template_ip
+#   ansible.builtin.debug:
+#     var: template_ip
 
 - name: Add template_ip to inventory
   ## Some modules like the package module require the host to be in inventory
