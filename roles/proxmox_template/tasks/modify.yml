@@ -79,4 +79,21 @@
     name:  qemu-guest-agent
     state: present
 
+- name: Add extra user
+  when: extra_user is defined
+  ansible.builtin.user:
+    name: "{{ extra_user}}"
+    shell: /bin/bash
+    groups: sudo
+    append: true
+    create_home: true
+    password: "{{ extra_user_password_hash | default('!') }}"  # Disable password login if no password provided
 
+- name: Deploy NOPASSWD sudo rule for ansible user
+  when: extra_user is defined
+  ansible.builtin.lineinfile:
+    path: "/etc/sudoers.d/{{ extra_user }}"
+    line: "{{ extra_user }} ALL=(ALL) NOPASSWD: ALL"
+    create: yes
+    mode: '0440'
+    validate: 'visudo -cf %s'
