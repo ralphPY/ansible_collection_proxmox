@@ -25,7 +25,9 @@
 
 - name: Set template exists fact
   set_fact:
-    template_exists: "{{ template_status.failed == false }}"  # when using proxmox module
+    #template_exists: "{{ template_status.failed == false }}" 
+    template_exists: "{{ 'does not exist' not in template_status.msg.lower() }}"
+    template_running: "{{ 'is running' in template_status.msg.lower() }}"
 
 - name: Debug template status
   debug:
@@ -34,6 +36,7 @@
       "Template API call msg: {{ template_status.msg }}"
       "Template status: {{ template_status }}"
       "Template exists: {{ template_exists }}"
+      "Template running: {{ template_exists }}"
 
 # - name: Check if template exists via Proxmox API
 #   uri:
