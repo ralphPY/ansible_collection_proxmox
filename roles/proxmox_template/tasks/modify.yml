@@ -52,8 +52,8 @@
   become: true
   ansible.builtin.lineinfile:
     path: /etc/ssh/sshd_config
-    regexp: '^#\?PasswordAuthentication no'
-    line: 'PasswordAuthentication=yes'
+    regexp: '^#?PasswordAuthentication no'
+    line: 'PasswordAuthentication yes'
   notify: Restart SSH           ## Run handler to restart SSH after modifying the config
 
 - name: Wait for SSH to become reachable
