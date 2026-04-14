@@ -66,11 +66,15 @@
 - name: Debug template_ip
   ansible.builtin.debug:
     var: template_ip
-    
+
 - name: Add template_ip to inventory
   ansible.builtin.add_host:
     name: my_vm
     ansible_host: "{{ template_ip }}"
+
+- name: Dummy task to populate hostvars
+  ansible.builtin.ping:
+  delegate_to: "{{ template_ip }}"
 
 - name: Ensure qemu-guest-agent is installed
   delegate_to: "{{ template_ip }}"
