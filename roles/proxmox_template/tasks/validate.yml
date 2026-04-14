@@ -5,7 +5,7 @@
       - proxmox_user is defined
       - proxmox_token_id is defined
       - proxmox_token_secret is defined
-      - node is defined
+      - proxmox_node is defined
       - storage is defined
       - template_vmid is defined
       - template_name is defined

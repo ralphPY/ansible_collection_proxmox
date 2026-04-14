@@ -17,7 +17,7 @@
     api_token_secret: "{{ proxmox_token_secret }}"
     validate_certs: "{{ proxmox_validate_certs | default(false) }}"
     vmid: "{{ template_vmid }}"
-    node: "{{ node }}"
+    node: "{{ proxmox_node }}"
     state: info
   register: template_status
   failed_when: false
@@ -48,7 +48,7 @@
     api_token_id: "{{ proxmox_token_id }}"
     api_token_secret: "{{ proxmox_token_secret }}"
     validate_certs: "{{ proxmox_validate_certs | default(false) }}"
-    node: "{{ node }}"
+    node: "{{ proxmox_node }}"
     vmid: "{{ template_vmid }}"
     state: stopped
 
@@ -76,7 +76,7 @@
     api_token_id: "{{ proxmox_token_id }}"
     api_token_secret: "{{ proxmox_token_secret }}"
     validate_certs: "{{ proxmox_validate_certs | default(false) }}"
-    node: "{{ node }}"
+    node: "{{ proxmox_node }}"
     vmid: "{{ template_vmid }}"
     name: "{{ template_name }}"
     memory: "{{ template_memory }}"
@@ -113,7 +113,7 @@
     api_token_id: "{{ proxmox_token_id }}"
     api_token_secret: "{{ proxmox_token_secret }}"
     validate_certs: "{{ proxmox_validate_certs | default(false) }}"
-    node: "{{ node }}"
+    node: "{{ proxmox_node }}"
     vmid: "{{ template_vmid }}"
     boot: "order=scsi0"
     update: true
