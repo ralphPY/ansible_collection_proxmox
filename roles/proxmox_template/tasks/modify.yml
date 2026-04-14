@@ -74,10 +74,10 @@
 
 - name: Dummy task to populate hostvars
   ansible.builtin.ping:
-  delegate_to: "{{ template_ip }}"
+  delegate_to: my_vm
 
 - name: Ensure qemu-guest-agent is installed
-  delegate_to: "{{ template_ip }}"
+  delegate_to: my_vm
   become: true
   ansible.builtin.package:
     name:  qemu-guest-agent
