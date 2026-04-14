@@ -32,7 +32,6 @@
     msg: |-
       "Template API call failed: {{ template_status.failed }}"
       "Template API call msg: {{ template_status.msg }}"
-      "Template API call status: {{ template_status.status }}"
       "Template status: {{ template_status }}"
       "Template exists: {{ template_exists }}"
 
