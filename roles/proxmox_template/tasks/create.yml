@@ -9,7 +9,7 @@
 #     template_exists: "{{ template_status.rc == 0 }}"         # when using cli command
 
 
-- name: Check if template exists via proxmox module
+- name: Check if template exists
   community.proxmox.proxmox_kvm:
     api_host: "{{ proxmox_host }}"
     api_user: "{{ proxmox_user }}"
@@ -18,7 +18,7 @@
     validate_certs: "{{ proxmox_validate_certs | default(false) }}"
     vmid: "{{ template_vmid }}"
     node: "{{ proxmox_node }}"
-    state: info
+    state: current
   register: template_status
   failed_when: false
   changed_when: false
