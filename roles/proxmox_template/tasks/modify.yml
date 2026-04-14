@@ -55,10 +55,13 @@
     line: 'PasswordAuthentication=yes'
   notify: Restart SSH         # Run handler to restart SSH after modifying the config
 
-- name: Wait for internal Cloud-init to finish
-  delegate_to: "{{ template_ip }}"
-  ansible.builtin.command: cloud-init status --wait
-  changed_when: false
+- name: Wait for SSH to become reachable
+  ansible.builtin.wait_for:
+    host: "{{ template_ip }}"
+    port: 22
+    connect_timeout: 10
+    delay: 10
+    timeout: 600
 
 - name: Ensure qemu-guest-agent is installed
   delegate_to: "{{ template_ip }}"
