@@ -63,6 +63,10 @@
     delay: 10
     timeout: 600
 
+- name: Debug template_ip
+  ansible.builtin.debug:
+    var: template_ip
+    
 - name: Add template_ip to inventory
   ansible.builtin.add_host:
     name: my_vm
