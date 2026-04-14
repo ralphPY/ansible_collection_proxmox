@@ -5,7 +5,7 @@
     api_token_id: "{{ proxmox_token_id }}"
     api_token_secret: "{{ proxmox_token_secret }}"
     validate_certs: {{ proxmox_validate_certs | default(false) }}
-    node: "{{ node }}"
+    node: "{{ proxmox_node }}"
     clone: "{{ template_name }}"
     vmid: "{{ template_vmid }}"
     newid: "{{ item.vmid }}"
@@ -23,8 +23,8 @@
     api_user: "{{ proxmox_user }}"
     api_token_id: "{{ proxmox_token_id }}"
     api_token_secret: "{{ proxmox_token_secret }}"
-    validate_certs: false
-    node: "{{ node }}"
+    validate_certs: {{ validate_certs }}
+    node: "{{ proxmox_node }}"
     vmid: "{{ item.vmid }}"
     state: started
   loop: "{{ vm_list }}"

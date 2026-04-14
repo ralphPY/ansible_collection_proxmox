@@ -47,7 +47,7 @@
       "Template cloud-init rc: {{ cloud_init_status.rc }}"
       "Template cloud-init failed: {{ cloud_init_status.failed }}"
 
-- name: update sshd config
+- name: Mpdate sshd config to allow PasswordAuthentication
   delegate_to: "{{ template_ip }}"
   become: true
   ansible.builtin.lineinfile:
