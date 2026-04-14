@@ -8,6 +8,7 @@ template_cpu: host
 template_bridge: vmbr0
 template_ipconfig: "ip={{ template_ip | default('') }}{{ template_cidr | default('') }},gw={{ template_gw | default('') }}"
 
+storage: "{{ proxmox_storage | default('local-lvm') }}"
 ciuser: "{{ ansible_user_id | default('ansible') }}"
 ciuser_pub_key: "{{ ansible_pub_key | default(lookup('file', '~/.ssh/id_rsa.pub')) }}"
 
