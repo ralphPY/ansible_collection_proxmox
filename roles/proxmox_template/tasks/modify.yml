@@ -17,12 +17,28 @@
     port: 22
     connect_timeout: 10
     delay: 10
-    timeout: 300
+    timeout: 600
+    path: /run/cloud-init/result.json       ## wait for cloud-init result file to exist
 
-- name: Wait for internal Cloud-init to finish
-  delegate_to: "{{ template_ip }}"
-  ansible.builtin.command: cloud-init status --wait
-  changed_when: false
+- name: Wait for cloud-init to finish on remote host
+  ansible.builtin.shell: cloud-init status --wait
+  args:
+    executable: /bin/bash
+  delegate_to: "{{ template_host }}"
+  retries: 3
+  delay: 10
+  until: cloud_init_status is succeeded
+  register: cloud_init_status
+
+- name: Debug cloud-init status
+  debug:
+    msg: |-
+      "Template cloud-init status: {{ cloud_init_status.msg }}"
+
+# - name: Wait for internal Cloud-init to finish
+#   delegate_to: "{{ template_ip }}"
+#   ansible.builtin.command: cloud-init status --wait
+#   changed_when: false
 
 - name: update sshd config
   delegate_to: "{{ template_ip }}"
