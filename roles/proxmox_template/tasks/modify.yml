@@ -1,4 +1,10 @@
 ## Start Template, modify it and stop it.
+- name: Add template_ip to inventory
+  ## Some modules like the package module require the host to be in inventory
+  ## They do not seem to work delegating to ip address directly.
+  ansible.builtin.add_host:
+    name: template_vm
+    ansible_host: "{{ template_ip }}"
 
 - name: Start Template
   community.proxmox.proxmox_kvm:
@@ -13,7 +19,7 @@
 
 - name: Wait for SSH to become reachable
   ansible.builtin.wait_for:
-    host: "{{ template_ip }}"
+    host: template_vm
     port: 22
     connect_timeout: 10
     delay: 10
@@ -23,7 +29,7 @@
   ansible.builtin.shell: cloud-init status --wait
   args:
     executable: /bin/bash
-  delegate_to: "{{ template_ip }}"
+  delegate_to: template_vm
   retries: 3
   delay: 10
   #until: cloud_init_status is succeeded
@@ -47,7 +53,7 @@
   changed_when: false
 
 - name: update sshd config
-  delegate_to: "{{ template_ip }}"
+  delegate_to: template_vm
   become: true
   ansible.builtin.lineinfile:
     path: /etc/ssh/sshd_config
@@ -57,7 +63,7 @@
 
 - name: Wait for SSH to become reachable
   ansible.builtin.wait_for:
-    host: "{{ template_ip }}"
+    host: template_vm
     port: 22
     connect_timeout: 10
     delay: 10
@@ -66,13 +72,6 @@
 # - name: Debug template_ip
 #   ansible.builtin.debug:
 #     var: template_ip
-
-- name: Add template_ip to inventory
-  ## Some modules like the package module require the host to be in inventory
-  ## They do not seem to work delegating to ip address directly.
-  ansible.builtin.add_host:
-    name: template_vm
-    ansible_host: "{{ template_ip }}"
 
 # - name: Dummy task to populate hostvars
 #   ansible.builtin.ping:
