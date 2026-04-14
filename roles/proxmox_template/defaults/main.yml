@@ -12,7 +12,5 @@ storage: "{{ proxmox_storage | default('local-lvm') }}"
 ciuser: "{{ ansible_user_id | default('ansible') }}"
 ciuser_pub_key: "{{ ansible_pub_key }}"
 
-extra_user: "{{ template_extra_user | default('') }}"
-
 cloudinit: true
 force_recreate_template: false
