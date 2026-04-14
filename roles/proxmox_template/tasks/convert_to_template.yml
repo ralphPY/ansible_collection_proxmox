@@ -1,3 +1,14 @@
+- name: Stop Template
+  community.proxmox.proxmox_kvm:
+    api_host: "{{ proxmox_host }}"
+    api_user: "{{ proxmox_user }}"
+    api_token_id: "{{ proxmox_token_id }}"
+    api_token_secret: "{{ proxmox_token_secret }}"
+    validate_certs: "{{ proxmox_validate_certs | default(false) }}"
+    node: "{{ proxmox_node }}"
+    vmid: "{{ template_vmid }}"
+    state: stopped
+
 - name: Convert to template
   when: not template_exists or force_recreate_template
   community.proxmox.proxmox_kvm:

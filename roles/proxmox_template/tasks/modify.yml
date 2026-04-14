@@ -68,28 +68,21 @@
     var: template_ip
 
 - name: Add template_ip to inventory
+  ## Some modules like the package module require the host to be in inventory
+  ## They do not seem to work delegating to ip address directly.
   ansible.builtin.add_host:
-    name: my_vm
+    name: template_vm
     ansible_host: "{{ template_ip }}"
 
-- name: Dummy task to populate hostvars
-  ansible.builtin.ping:
-  delegate_to: my_vm
+# - name: Dummy task to populate hostvars
+#   ansible.builtin.ping:
+#   delegate_to: my_vm
 
 - name: Ensure qemu-guest-agent is installed
-  delegate_to: my_vm
+  delegate_to: template_vm
   become: true
   ansible.builtin.package:
     name:  qemu-guest-agent
     state: present
 
-- name: Stop Template
-  community.proxmox.proxmox_kvm:
-    api_host: "{{ proxmox_host }}"
-    api_user: "{{ proxmox_user }}"
-    api_token_id: "{{ proxmox_token_id }}"
-    api_token_secret: "{{ proxmox_token_secret }}"
-    validate_certs: "{{ proxmox_validate_certs | default(false) }}"
-    node: "{{ proxmox_node }}"
-    vmid: "{{ template_vmid }}"
-    state: stopped
+
