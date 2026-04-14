@@ -80,6 +80,8 @@
     state: present
 
 - name: Add extra user
+  delegate_to: template_vm
+  become: true
   when: extra_user is defined and extra_user | length > 0
   ansible.builtin.user:
     name: "{{ extra_user}}"
@@ -90,6 +92,8 @@
     password: "{{ extra_user_password_hash | default('!') }}"  # Disable password login if no password provided
 
 - name: Deploy NOPASSWD sudo rule for ansible user
+  delegate_to: template_vm
+  become: true
   when: extra_user is defined and extra_user | length > 0
   ansible.builtin.lineinfile:
     path: "/etc/sudoers.d/{{ extra_user }}"
