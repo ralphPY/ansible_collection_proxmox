@@ -26,8 +26,10 @@
   delegate_to: "{{ template_ip }}"
   retries: 3
   delay: 10
-  until: "'status: done' in cloud_init_status.stdout"
   #until: cloud_init_status is succeeded
+  until: "'status: done' in cloud_init_status.stdout"
+  ignore_errors: true
+  changed_when: false
   register: cloud_init_status
 
 - name: Debug cloud-init status
