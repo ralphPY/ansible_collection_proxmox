@@ -1,24 +1,24 @@
 - name: Configure cloud-init
-  #when: item.cloudinit | default(false)
+  when: cloudinit | default(false)
   community.general.proxmox_kvm:
     api_host: "{{ proxmox_host }}"
     api_user: "{{ proxmox_user }}"
     api_token_id: "{{ proxmox_token_id }}"
     api_token_secret: "{{ proxmox_token_secret }}"
-    validate_certs: false
+    validate_certs: {{ proxmox_validate_certs | default(false) }}
     node: "{{ node }}"
     vmid: "{{ template_vmid }}"
-    ciuser: "{{ template_ciuser }}"
-    sshkeys: "{{ ssh_public_key }}"
+    ciuser: "{{ ciuser }}"
+    sshkeys: "{{ ciuser_pub_key }}"
     ipconfig:
       ipconfig0: "{{ template_ipconfig | default('ip=dhcp') }}"
 
     # user_data: |
     #   #cloud-config
     #   # 1. User & SSH Setup (Since user_data overrides GUI fields)
-    #   user: {{ template_ciuser }}
+    #   user: {{ ciuser }}
     #   ssh_authorized_keys:
-    #     - {{ ssh_public_key }}
+    #     - {{ ciuser_pub_key }}
     #   sudo: ALL=(ALL) NOPASSWD:ALL
 
     #   # 2. Package Installation
@@ -33,6 +33,7 @@
     #     # Modify SSHD config directly
     #     - sed -i 's/^#\?PasswordAuthentication.*/PasswordAuthentication yes/' /etc/ssh/sshd_config
     #     - systemctl restart ssh
+    
     update: true
 
 
@@ -51,7 +52,7 @@
 #     api_user: "{{ proxmox_user }}"
 #     api_token_id: "{{ proxmox_token_id }}"
 #     api_token_secret: "{{ proxmox_token_secret }}"
-#     validate_certs: false
+#     validate_certs: {{ proxmox_validate_certs | default(false) }}
 #     node: "{{ node }}"
 #     vmid: "{{ item.vmid }}"
 #     #cicustom: "user=local:snippets/{{ item.name }}.yaml"

@@ -1,5 +1,5 @@
-- import_tasks: validate.yml
-- import_tasks: create.yml
-- import_tasks: cloudinit.yml
-- import_tasks: modify.yml
-- import_tasks: convert_to_template.yml
+- import_tasks: validate.yml             ## Check if all required variables are set and valid
+- import_tasks: create.yml               ## Create the VM   
+- import_tasks: cloudinit.yml            ## Configure cloud-init 
+- import_tasks: modify.yml               ## Customize VM before converting to template (e.g. apt install etc)  
+- import_tasks: convert_to_template.yml  ## Convert the VM to a template

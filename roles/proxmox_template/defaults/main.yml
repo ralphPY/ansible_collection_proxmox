@@ -1,15 +1,15 @@
 # Can be overridden in playbook
-image_url: "{{ proxmox_template_image_url | default('https://cloud.debian.org/images/cloud/trixie/latest/debian-13-genericcloud-amd64.qcow2') }}"
-image_file: "{{ proxmox_template_image_file | default('/var/lib/vz/images/debian.qcow2') }}"
+image_url: "{{ template_image_url | default('https://cloud.debian.org/images/cloud/trixie/latest/debian-13-genericcloud-amd64.qcow2') }}"
+image_file: "{{ template_image_file | default('/var/lib/vz/images/debian.qcow2') }}"
 
 template_memory: 2048
 template_cores: 2
 template_cpu: host
 template_bridge: vmbr0
-
-template_ciuser: ansible
 template_ipconfig: "ip={{ template_ip | default('') }}{{ template_cidr | default('') }},gw={{ template_gw | default('') }}"
 
-#template_ipconfig: "{{ template_ip | default('ip=dhcp') }}"
+ciuser: {{ ansible_user_id | default('ansible') }}
+ciuser_pub_key: "{{ ansible_pub_key | default(lookup('file', '~/.ssh/id_rsa.pub')) }}"
 
+cloudinit: true
 force_recreate_template: false

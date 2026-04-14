@@ -11,7 +11,7 @@
     api_user: "{{ proxmox_user }}"
     api_token_id: "{{ proxmox_token_id }}"
     api_token_secret: "{{ proxmox_token_secret }}"
-    validate_certs: false
+    validate_certs: {{ proxmox_validate_certs | default(false) }}
     vmid: "{{ template_vmid }}"
     node: "{{ node }}"
     state: info
@@ -42,7 +42,7 @@
     api_user: "{{ proxmox_user }}"
     api_token_id: "{{ proxmox_token_id }}"
     api_token_secret: "{{ proxmox_token_secret }}"
-    validate_certs: false
+    validate_certs: {{ proxmox_validate_certs | default(false) }}
     node: "{{ node }}"
     vmid: "{{ template_vmid }}"
     state: stopped
@@ -70,7 +70,7 @@
     api_user: "{{ proxmox_user }}"
     api_token_id: "{{ proxmox_token_id }}"
     api_token_secret: "{{ proxmox_token_secret }}"
-    validate_certs: false
+    validate_certs: {{ proxmox_validate_certs | default(false) }}
     node: "{{ node }}"
     vmid: "{{ template_vmid }}"
     name: "{{ template_name }}"
@@ -107,7 +107,7 @@
     api_user: "{{ proxmox_user }}"
     api_token_id: "{{ proxmox_token_id }}"
     api_token_secret: "{{ proxmox_token_secret }}"
-    validate_certs: false
+    validate_certs: {{ proxmox_validate_certs | default(false) }}
     node: "{{ node }}"
     vmid: "{{ template_vmid }}"
     boot: "order=scsi0"
