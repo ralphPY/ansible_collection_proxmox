@@ -9,9 +9,9 @@
     vmid: "{{ template_vmid }}"
     state: stopped
 
-- name: Pause for 10 seconds
+- name: Pause for 6 seconds
   ansible.builtin.pause:
-    seconds: 10
+    seconds: 6
 
 - name: Convert to template
   when: not template_exists or force_recreate_template
@@ -25,6 +25,6 @@
     vmid: "{{ template_vmid }}"
     template: true
 
-- name: Pause for 10 seconds
+- name: Pause for 6 seconds
   ansible.builtin.pause:
-    seconds: 10
+    seconds: 6
