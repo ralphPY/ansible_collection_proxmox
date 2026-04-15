@@ -1,4 +1,4 @@
-- name: Restart VMs
+- name: Start VMs
   when: vm_start
   community.proxmox.proxmox_kvm:
     api_host: "{{ proxmox_host }}"
@@ -10,9 +10,12 @@
     vmid: "{{ item.vmid }}"
     state: started
     force: true
-    delay: 5
   loop: "{{ vm_list }}"
 
+- name: Pause for 10 seconds
+  ansible.builtin.pause:
+    seconds: 10
+    
 - name: Restart VMs
   when: vm_start
   community.proxmox.proxmox_kvm:
