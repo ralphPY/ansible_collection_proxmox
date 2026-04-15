@@ -8,5 +8,6 @@
     validate_certs: "{{ validate_certs }}"
     node: "{{ proxmox_node }}"
     vmid: "{{ item.vmid }}"
-    state: started
+    state: restarted
+    force: true
   loop: "{{ vm_list }}"
