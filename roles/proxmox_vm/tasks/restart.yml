@@ -8,6 +8,20 @@
     validate_certs: "{{ validate_certs }}"
     node: "{{ proxmox_node }}"
     vmid: "{{ item.vmid }}"
+    state: started
+    force: true
+  loop: "{{ vm_list }}"
+
+- name: Restart VMs
+  when: vm_start
+  community.proxmox.proxmox_kvm:
+    api_host: "{{ proxmox_host }}"
+    api_user: "{{ proxmox_user }}"
+    api_token_id: "{{ proxmox_token_id }}"
+    api_token_secret: "{{ proxmox_token_secret }}"
+    validate_certs: "{{ validate_certs }}"
+    node: "{{ proxmox_node }}"
+    vmid: "{{ item.vmid }}"
     state: restarted
     force: true
   loop: "{{ vm_list }}"
