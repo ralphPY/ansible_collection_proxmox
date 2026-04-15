@@ -8,7 +8,10 @@
     node: "{{ proxmox_node }}"
     vmid: "{{ template_vmid }}"
     state: stopped
-    delay: 5
+
+- name: Pause for 5 seconds
+  ansible.builtin.pause:
+    seconds: 5
 
 - name: Convert to template
   when: not template_exists or force_recreate_template
@@ -21,3 +24,7 @@
     node: "{{ proxmox_node }}"
     vmid: "{{ template_vmid }}"
     template: true
+
+- name: Pause for 5 seconds
+  ansible.builtin.pause:
+    seconds: 5
