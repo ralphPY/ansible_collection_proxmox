@@ -1,4 +1,5 @@
-- name: Clone VMs
+- name: Start VMs
+  when: vm_start
   community.proxmox.proxmox_kvm:
     api_host: "{{ proxmox_host }}"
     api_user: "{{ proxmox_user }}"
@@ -6,12 +7,6 @@
     api_token_secret: "{{ proxmox_token_secret }}"
     validate_certs: "{{ validate_certs }}"
     node: "{{ proxmox_node }}"
-    clone: "{{ template_name }}"
-    vmid: "{{ template_vmid }}"
-    newid: "{{ item.vmid }}"
-    name: "{{ item.name }}"
-    full: "{{ vm_full_clone }}"
-    memory: "{{ item.memory | default(omit) }}"
-    cores: "{{ item.cores | default(omit) }}"
-    state: present
+    vmid: "{{ item.vmid }}"
+    state: started
   loop: "{{ vm_list }}"
