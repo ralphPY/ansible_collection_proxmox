@@ -1,4 +1,4 @@
-- name: Start VMs
+- name: Restart VMs
   when: vm_start
   community.proxmox.proxmox_kvm:
     api_host: "{{ proxmox_host }}"

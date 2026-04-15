@@ -2,4 +2,4 @@
 - import_tasks: clone.yml
 - import_tasks: resize.yml
 - import_tasks: network.yml
-- import_tasks: start.yml
+- import_tasks: restart.yml

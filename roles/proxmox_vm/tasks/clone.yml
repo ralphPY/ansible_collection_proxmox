@@ -13,5 +13,5 @@
     full: "{{ vm_full_clone }}"
     memory: "{{ item.memory | default(omit) }}"
     cores: "{{ item.cores | default(omit) }}"
-    state: present
+    state: started
   loop: "{{ vm_list }}"
