@@ -8,6 +8,7 @@
     node: "{{ proxmox_node }}"
     vmid: "{{ template_vmid }}"
     state: stopped
+    delay: 5
 
 - name: Convert to template
   when: not template_exists or force_recreate_template

@@ -10,6 +10,7 @@
     vmid: "{{ item.vmid }}"
     state: started
     force: true
+    delay: 5
   loop: "{{ vm_list }}"
 
 - name: Restart VMs
