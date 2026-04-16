@@ -1,6 +1,20 @@
-vm_list: []
+#vm_list: []
 vm_start: true
 vm_full_clone: true
 vm_disk_resize: false
 validate_certs: "{{ proxmox_validate_certs | default(false) }}"
 storage: "{{ proxmox_vm_storage | default('local-lvm') }}"
+
+default_VM_list:
+  - name: vm1
+    vmid: 201
+    disk: 10G
+    cloudinit: true
+    ip: "ip=dhcp"
+  - name: vm2
+    vmid: 202
+    disk: 10G
+    cloudinit: true
+    ip: "ip=192.168.1.100/24,gw=192.168.1.1"
+
+vm_list: {{ vms_to_clone | default(default_vm_list) }}
