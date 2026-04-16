@@ -5,7 +5,7 @@ vm_disk_resize: false
 validate_certs: "{{ proxmox_validate_certs | default(false) }}"
 storage: "{{ proxmox_vm_storage | default('local-lvm') }}"
 
-default_VM_list:
+default_vm_list:
   - name: vm1
     vmid: 201
     disk: 10G
