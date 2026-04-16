@@ -42,6 +42,7 @@
   register: cloud_init_status
 
 - name: Debug cloud-init status
+  when: not template_exists or force_recreate_template
   debug:
     msg: |-
       "Template cloud-init status: {{ cloud_init_status.msg }}"

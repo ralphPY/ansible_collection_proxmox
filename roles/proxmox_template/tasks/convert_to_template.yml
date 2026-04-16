@@ -17,6 +17,7 @@
     qm stop {{ template_vmid }}
 
 - name: Pause for 3 seconds
+  when: not template_exists or force_recreate_template
   ansible.builtin.pause:
     seconds: 3
 

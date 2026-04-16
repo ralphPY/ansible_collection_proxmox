@@ -1,5 +1,5 @@
 - name: Configure cloud-init
-  when: cloudinit | default(false)
+  when: not template_exists or force_recreate_template
   community.general.proxmox_kvm:
     api_host: "{{ proxmox_host }}"
     api_user: "{{ proxmox_user }}"
