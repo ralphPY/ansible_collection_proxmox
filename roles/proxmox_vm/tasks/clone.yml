@@ -7,7 +7,7 @@
     validate_certs: "{{ validate_certs }}"
     node: "{{ item.node | default(proxmox_node) }}"
     #target: "{{ item.node | default(omit) }}"
-    migrate: true
+    #migrate: true
     clone: "{{ template_name }}"
     storage: "{{ storage }}"
     vmid: "{{ template_vmid }}"
