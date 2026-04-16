@@ -114,7 +114,7 @@
   become: true
   command: >
     qm set {{ template_vmid }}
-    --scsi0 {{ storage }}:vm-{{ template_vmid }}-disk-0
+    --scsi0 {{ storage }}:vm-{{ template_vmid }}-disk-0.raw
 
 - name: Set boot order
   when: not template_exists or force_recreate_template
