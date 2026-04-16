@@ -6,7 +6,7 @@
     api_token_id: "{{ proxmox_token_id }}"
     api_token_secret: "{{ proxmox_token_secret }}"
     validate_certs: "{{ validate_certs }}"
-    node: "{{ proxmox_node }}"
+    node: "{{ item.node | default(proxmox_node) }}"
     vmid: "{{ item.vmid }}"
     state: started
   loop: "{{ vm_list }}"
