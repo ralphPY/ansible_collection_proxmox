@@ -42,5 +42,6 @@
 #     template: true
 
 - name: Pause for 6 seconds
+  when: not template_exists or force_recreate_template
   ansible.builtin.pause:
     seconds: 6
