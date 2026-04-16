@@ -17,4 +17,4 @@ default_VM_list:
     cloudinit: true
     ip: "ip=192.168.1.100/24,gw=192.168.1.1"
 
-vm_list: {{ vms_to_clone | default(default_vm_list) }}
+vm_list: "{{ vms_to_clone | default(default_vm_list) }}"
