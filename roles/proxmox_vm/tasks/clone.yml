@@ -5,7 +5,7 @@
     api_token_id: "{{ proxmox_token_id }}"
     api_token_secret: "{{ proxmox_token_secret }}"
     validate_certs: "{{ validate_certs }}"
-    node: "{{ proxmox_node }}"
+    node: "{{ item.node | default(proxmox_node) }}"
     clone: "{{ template_name }}"
     storage: "{{ storage }}"
     vmid: "{{ template_vmid }}"
