@@ -1,4 +1,28 @@
 - name: Clone VMs
+  when: item.node is not defined or item.node == proxmox_node
+  community.proxmox.proxmox_kvm:
+    api_host: "{{ proxmox_host }}"
+    api_user: "{{ proxmox_user }}"
+    api_token_id: "{{ proxmox_token_id }}"
+    api_token_secret: "{{ proxmox_token_secret }}"
+    validate_certs: "{{ validate_certs }}"
+    node: "{{ item.node | default(proxmox_node) }}"
+    #target: "{{ item.node | default(omit) }}"
+    migrate: true
+    clone: "{{ template_name }}"
+    storage: "{{ storage }}"
+    vmid: "{{ template_vmid }}"
+    newid: "{{ item.vmid }}"
+    name: "{{ item.name }}"
+    full: "{{ vm_full_clone }}"
+    memory: "{{ item.memory | default(omit) }}"
+    cores: "{{ item.cores | default(omit) }}"
+    timeout: 300
+    state: present
+  loop: "{{ vm_list }}"
+
+- name: Clone VMs
+  when: item.node is defined and item.node == proxmox_node2
   community.proxmox.proxmox_kvm:
     api_host: "{{ proxmox_host }}"
     api_user: "{{ proxmox_user }}"
