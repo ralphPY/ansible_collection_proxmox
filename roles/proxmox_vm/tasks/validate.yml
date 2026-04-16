@@ -2,5 +2,17 @@
   assert:
     that:
       - vm_list | length > 0
-      - validate_certs is defined
     fail_msg: "vm_list must not be empty"
+
+- name: Validate VM clone list
+  assert:
+    that:
+      - vms_to_clone is defined
+    fail_msg: "vms_to_clone variable is not defined. Please define it in your extra variables file."
+  
+- name: Validate required variables
+  assert:
+    that:
+      - validate_certs is defined
+      - storage is defined
+    fail_msg: "Missing required variables"

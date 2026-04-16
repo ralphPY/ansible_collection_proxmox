@@ -40,6 +40,6 @@
 #     vmid: "{{ template_vmid }}"
 #     template: true
 
-- name: Pause for 3 seconds
+- name: Pause for 6 seconds
   ansible.builtin.pause:
-    seconds: 3
+    seconds: 6
