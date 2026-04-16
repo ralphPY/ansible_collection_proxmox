@@ -1,7 +1,7 @@
 - name: Start VMs
   when: vm_start
   community.proxmox.proxmox_kvm:
-    api_host: "{{ proxmox_host }}"
+    api_host: "{{ item.node | default(proxmox_host) }}.local"
     api_user: "{{ proxmox_user }}"
     api_token_id: "{{ proxmox_token_id }}"
     api_token_secret: "{{ proxmox_token_secret }}"
