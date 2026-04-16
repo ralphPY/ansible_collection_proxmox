@@ -1,5 +1,5 @@
 - name: Validate required variables
-  assert:
+  ansible.builtin.assert:
     that:
       - proxmox_host is defined
       - proxmox_user is defined
