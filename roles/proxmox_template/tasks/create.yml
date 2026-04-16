@@ -52,7 +52,7 @@
 #   set_fact:
 #     template_exists: "{{ template_status.status == 200 }}"   # when using API call
 
-- name: Make sure Templated is not running
+- name: Stop existing template if needed
   when: template_exists and force_recreate_template
   community.proxmox.proxmox_kvm:
     api_host: "{{ proxmox_host }}"
@@ -64,7 +64,7 @@
     vmid: "{{ template_vmid }}"
     state: stopped
 
-- name: Destroy template if forced
+- name: Destroy existing template if forced
   when: template_exists and force_recreate_template
   delegate_to: "{{ proxmox_host }}"
   become: true
@@ -79,7 +79,7 @@
     url: "{{ image_url }}"
     dest: "{{ image_file }}"
 
-- name: Create template VM
+- name: Create new template VM
   when: not template_exists or force_recreate_template
   community.proxmox.proxmox_kvm:
     api_host: "{{ proxmox_host }}"

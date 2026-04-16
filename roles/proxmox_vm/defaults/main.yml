@@ -3,3 +3,4 @@ vm_start: true
 vm_full_clone: true
 vm_disk_resize: false
 validate_certs: "{{ proxmox_validate_certs | default(false) }}"
+storage: "{{ proxmox_vm_storage | default('local-lvm') }}"
