@@ -14,5 +14,6 @@
     full: "{{ vm_full_clone }}"
     memory: "{{ item.memory | default(omit) }}"
     cores: "{{ item.cores | default(omit) }}"
+    timeout: 300
     state: present
   loop: "{{ vm_list }}"
