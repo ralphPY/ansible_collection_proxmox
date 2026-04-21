@@ -85,12 +85,12 @@
     name:  qemu-guest-agent
     state: present
 
-- name: Ensure dnstools is installed
+- name: Ensure dnsutils is installed
   when: not template_exists or force_recreate_template
   delegate_to: template_vm
   become: true
   ansible.builtin.package:
-    name:  dnstools
+    name:  dnsutils
     state: present
 
 - name: Ensure git is installed
