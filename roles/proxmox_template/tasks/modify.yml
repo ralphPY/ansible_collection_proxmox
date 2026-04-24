@@ -101,6 +101,14 @@
     name:  git
     state: present
 
+- name: Ensure tmux is installed
+  when: not template_exists or force_recreate_template
+  delegate_to: template_vm
+  become: true
+  ansible.builtin.package:
+    name:  tmux
+    state: present
+
 - name: Add optional extra user
   delegate_to: template_vm
   become: true
